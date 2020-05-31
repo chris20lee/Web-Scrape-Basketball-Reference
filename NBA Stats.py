@@ -5,8 +5,6 @@ import pandas as pd
 from time import sleep
 from random import randint
 from warnings import warn
-import matplotlib.pyplot as plt
-import numpy as np
 
 # Variables
 data_dir = 'C:/Users/Chris/Desktop'
@@ -102,7 +100,7 @@ all_data = totals.merge(per_game, on=['player', 'pos', 'age', 'tm', 'g', 'gs', '
                                         '2p_percent', 'efg_percent', 'ft_percent', 'year'], how='inner')
 all_data.columns = all_data.columns.str.replace('_x', '').str.replace('_y', '_pg')
 
-# Merge in per minute stats
+# Merge in per 36 minutes stats
 all_data = all_data.merge(per_min, on=['player', 'pos', 'age', 'tm', 'g', 'gs', 'fg_percent', '3p_percent',
                                        '2p_percent', 'ft_percent', 'year'], how='inner')
 all_data.columns = all_data.columns.str.replace('_x', '').str.replace('_y', '_p36m')
