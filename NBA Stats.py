@@ -7,11 +7,10 @@ from random import randint
 from warnings import warn
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 
 # Variables
-data_dir = 'C:/Users/Chris/Google Drive/Sports Analytics/NBA Datasets'
-start_year = 2019
+data_dir = 'C:/Users/Chris/Desktop'
+start_year = 2000
 end_year = 2020
 stat_types = ['_totals', '_per_game', '_per_minute', '_per_poss', '_advanced']
 
