@@ -7,10 +7,10 @@ from random import randint
 from warnings import warn
 
 # Variables
-data_dir = 'C:/Users/Chris/Desktop'
-start_year = 2000
-end_year = 2020
-stat_types = ['_totals', '_per_game', '_per_minute', '_per_poss', '_advanced']
+DATA_DIR = 'C:/Users/Chris/Desktop'
+START_YEAR = 2019
+END_YEAR = 2020
+STAT_TYPES = ['_totals', '_per_game', '_per_minute', '_per_poss', '_advanced']
 
 # Functions
 def get_html(year, stat_type):
@@ -62,13 +62,13 @@ def format_dataframe(player_stats, stat_type):
     player_stats = player_stats.fillna(0)
 
     # Save to csv
-    player_stats.to_csv('{}/nba_player_stats{}.csv'.format(data_dir, stat_type), index=False)
+    player_stats.to_csv('{}/nba_player_stats{}.csv'.format(DATA_DIR, stat_type), index=False)
 
 # Main loop to get player statistics for all stat types for years of interest
-for stat_type in stat_types:
+for stat_type in STAT_TYPES:
     player_stats = pd.DataFrame()
     # Loop through the years
-    for year in range(start_year, end_year + 1):
+    for year in range(START_YEAR, END_YEAR + 1):
         # Slow down the web scrape
         sleep(randint(1, 4))
 
@@ -76,7 +76,7 @@ for stat_type in stat_types:
         html_soup = get_html(year, stat_type)
 
         # Get header
-        if year == start_year:
+        if year == START_YEAR:
             headers = get_header(html_soup)
 
         # Get player stats
@@ -88,11 +88,11 @@ for stat_type in stat_types:
     format_dataframe(player_stats, stat_type)
 
 # Read all stats into their own variables
-totals = pd.read_csv('{}/nba_player_stats_totals.csv'.format(data_dir))
-per_game = pd.read_csv('{}/nba_player_stats_per_game.csv'.format(data_dir))
-per_min = pd.read_csv('{}/nba_player_stats_per_minute.csv'.format(data_dir))
-per_poss = pd.read_csv('{}/nba_player_stats_per_poss.csv'.format(data_dir))
-advanced = pd.read_csv('{}/nba_player_stats_advanced.csv'.format(data_dir))
+totals = pd.read_csv('{}/nba_player_stats_totals.csv'.format(DATA_DIR))
+per_game = pd.read_csv('{}/nba_player_stats_per_game.csv'.format(DATA_DIR))
+per_min = pd.read_csv('{}/nba_player_stats_per_minute.csv'.format(DATA_DIR))
+per_poss = pd.read_csv('{}/nba_player_stats_per_poss.csv'.format(DATA_DIR))
+advanced = pd.read_csv('{}/nba_player_stats_advanced.csv'.format(DATA_DIR))
 
 # Join all 5 stats tables into 1 massive table
 # Merge per game stats into total stats table
@@ -115,4 +115,4 @@ all_data = all_data.merge(advanced, on=['player', 'pos', 'age', 'tm', 'g', 'mp',
 all_data.columns = all_data.columns.str.replace('_x', '_tot').str.replace('_y', '_adv')
 
 # Save csv
-all_data.to_csv('{}/all_nba_player_stats.csv'.format(data_dir), index=False)
+all_data.to_csv('{}/all_nba_player_stats.csv'.format(DATA_DIR), index=False)
